@@ -75,15 +75,32 @@ public class ReBirthArray {
      */
     public int removeDuplicates(int[] nums) {
         int len = nums.length;
-        int fast = 1;
+
         int low = 1;
-        while (fast < len) {
-            if(nums[fast] != nums[fast-1]) {
-                nums[low] = nums[fast];
+        for(int i = 1;i<len;i++) {
+            if(nums[i] != nums[i-1]) {
+                nums[low] = nums[i];
                 low++;
             }
-            fast++;
         }
         return low;
     }
+
+    /**
+     * 80. 删除有序数组中的重复项 II
+     * @param nums
+     * @return
+     */
+    public int removeDuplicates1(int[] nums) {
+        int len = nums.length;
+        int ans = 0;
+        for(int i = 0;i<len;i++) {
+            if(ans < 2 || nums[ans - 2] != nums[i]) {
+                nums[ans] = nums[i];
+                ans++;
+            }
+        }
+        return ans;
+    }
+
 }
