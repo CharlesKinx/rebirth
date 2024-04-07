@@ -142,5 +142,24 @@ public class ReBirthArray {
         return dp[len-1][0];
     }
 
+    /**
+     * 跳跃游戏
+     * @param nums
+     * @return
+     */
+    public boolean canJump(int[] nums) {
+
+        int len = nums.length;
+        int maxP = 0;
+        for(int i = 0; i < len && i <= maxP;i++) {
+            if(i + nums[i] >= len-1) {
+                return true;
+            }
+            if(i + nums[i] > maxP) {
+                maxP = i + nums[i];
+            }
+        }
+        return false;
+    }
 
 }
