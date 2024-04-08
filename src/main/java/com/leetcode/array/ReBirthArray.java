@@ -5,6 +5,9 @@ package com.leetcode.array;
  * @date 2024-04-02 10:52
  **/
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 /**
  * 面试经典100题之数组
  */
@@ -138,7 +141,6 @@ public class ReBirthArray {
             dp[i][0] = Math.max(dp[i-1][0],dp[i-1][1] + prices[i]);
             dp[i][1] = Math.max(dp[i-1][1],dp[i-1][0] - prices[i]);
         }
-
         return dp[len-1][0];
     }
 
@@ -161,5 +163,28 @@ public class ReBirthArray {
         }
         return false;
     }
+
+    /**
+     * 跳跃游戏 II
+     * @param nums
+     * @return
+     */
+    public int jump(int[] nums) {
+
+        int ans = 0;
+        int len = nums.length;
+        int maxP = 0;
+        int end = 0;
+        for(int i = 0;i<len-1;i++) {
+            maxP = Math.max(maxP,i + nums[i]);
+
+            if(i == end) {
+                end = maxP;
+                ans++;
+            }
+        }
+        return ans;
+    }
+
 
 }
