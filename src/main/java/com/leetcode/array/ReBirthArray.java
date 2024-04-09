@@ -5,8 +5,7 @@ package com.leetcode.array;
  * @date 2024-04-02 10:52
  **/
 
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 /**
  * 面试经典100题之数组
@@ -186,5 +185,71 @@ public class ReBirthArray {
         return ans;
     }
 
+    /**
+     * H 指数
+     * @param citations
+     * @return
+     */
+    public int hIndex(int[] citations) {
+        int len = citations.length;
+        Arrays.sort(citations);
 
+        int ans = 0;
+        int temp = 0;
+        for(int i = len - 1; i >= 0; i++) {
+            if(citations[i] > temp) {
+                temp++;
+            }else{
+                ans = Math.max(ans,temp);
+                temp = 0;
+            }
+        }
+        return ans;
+    }
+
+
+    /**
+     * O(1) 时间插入、删除和获取随机元素
+     */
+    class RandomizedSet {
+
+
+        private Set<Integer> hashSet;
+        public RandomizedSet() {
+            hashSet = new HashSet<>();
+        }
+
+        public boolean insert(int val) {
+            if(hashSet.contains(val)) {
+                return false;
+            }
+            hashSet.add(val);
+            return true;
+        }
+
+        public boolean remove(int val) {
+            if(hashSet.contains(val)) {
+                hashSet.remove(val);
+                return true;
+            }else{
+                return false;
+            }
+        }
+
+        public int getRandom() {
+            int len = hashSet.size();
+            Random random = new Random();
+            int index = random.nextInt(len);
+            int in = 0;
+            int ans = 0;
+            for(Integer num : hashSet) {
+                if(in == index) {
+                    num = ans;
+                    break;
+                }
+                in++;
+            }
+            return ans;
+        }
+    }
 }
