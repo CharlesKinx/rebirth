@@ -79,8 +79,8 @@ public class ReBirthArray {
         int len = nums.length;
 
         int low = 1;
-        for(int i = 1;i<len;i++) {
-            if(nums[i] != nums[i-1]) {
+        for (int i = 1; i < len; i++) {
+            if (nums[i] != nums[i - 1]) {
                 nums[low] = nums[i];
                 low++;
             }
@@ -90,14 +90,15 @@ public class ReBirthArray {
 
     /**
      * 80. 删除有序数组中的重复项 II
+     *
      * @param nums
      * @return
      */
     public int removeDuplicates1(int[] nums) {
         int len = nums.length;
         int ans = 0;
-        for(int i = 0;i<len;i++) {
-            if(ans < 2 || nums[ans - 2] != nums[i]) {
+        for (int i = 0; i < len; i++) {
+            if (ans < 2 || nums[ans - 2] != nums[i]) {
                 nums[ans] = nums[i];
                 ans++;
             }
@@ -107,6 +108,7 @@ public class ReBirthArray {
 
     /**
      * 买卖股票的最佳时机
+     *
      * @param prices
      * @return
      */
@@ -114,15 +116,15 @@ public class ReBirthArray {
         int len = prices.length;
 
         int[] maxV = new int[len];
-        maxV[len-1] = prices[len-1];
+        maxV[len - 1] = prices[len - 1];
 
-        for(int i = len-2; i >= 0; i--) {
-            maxV[i] = Math.max(prices[i], maxV[i+1]);
+        for (int i = len - 2; i >= 0; i--) {
+            maxV[i] = Math.max(prices[i], maxV[i + 1]);
         }
 
         int ans = Integer.MIN_VALUE;
-        for(int i = 0;i<len;i++) {
-            ans = Math.max(ans,maxV[i] - prices[i]);
+        for (int i = 0; i < len; i++) {
+            ans = Math.max(ans, maxV[i] - prices[i]);
         }
 
         return ans;
@@ -136,15 +138,16 @@ public class ReBirthArray {
         dp[0][0] = 0;
         dp[0][1] = -prices[0];
 
-        for(int i = 0;i<len;i++) {
-            dp[i][0] = Math.max(dp[i-1][0],dp[i-1][1] + prices[i]);
-            dp[i][1] = Math.max(dp[i-1][1],dp[i-1][0] - prices[i]);
+        for (int i = 0; i < len; i++) {
+            dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][1] + prices[i]);
+            dp[i][1] = Math.max(dp[i - 1][1], dp[i - 1][0] - prices[i]);
         }
-        return dp[len-1][0];
+        return dp[len - 1][0];
     }
 
     /**
      * 跳跃游戏
+     *
      * @param nums
      * @return
      */
@@ -152,11 +155,11 @@ public class ReBirthArray {
 
         int len = nums.length;
         int maxP = 0;
-        for(int i = 0; i < len && i <= maxP;i++) {
-            if(i + nums[i] >= len-1) {
+        for (int i = 0; i < len && i <= maxP; i++) {
+            if (i + nums[i] >= len - 1) {
                 return true;
             }
-            if(i + nums[i] > maxP) {
+            if (i + nums[i] > maxP) {
                 maxP = i + nums[i];
             }
         }
@@ -165,6 +168,7 @@ public class ReBirthArray {
 
     /**
      * 跳跃游戏 II
+     *
      * @param nums
      * @return
      */
@@ -174,10 +178,10 @@ public class ReBirthArray {
         int len = nums.length;
         int maxP = 0;
         int end = 0;
-        for(int i = 0;i<len-1;i++) {
-            maxP = Math.max(maxP,i + nums[i]);
+        for (int i = 0; i < len - 1; i++) {
+            maxP = Math.max(maxP, i + nums[i]);
 
-            if(i == end) {
+            if (i == end) {
                 end = maxP;
                 ans++;
             }
@@ -187,6 +191,7 @@ public class ReBirthArray {
 
     /**
      * H 指数
+     *
      * @param citations
      * @return
      */
@@ -196,11 +201,11 @@ public class ReBirthArray {
 
         int ans = 0;
         int temp = 0;
-        for(int i = len - 1; i >= 0; i++) {
-            if(citations[i] > temp) {
+        for (int i = len - 1; i >= 0; i++) {
+            if (citations[i] > temp) {
                 temp++;
-            }else{
-                ans = Math.max(ans,temp);
+            } else {
+                ans = Math.max(ans, temp);
                 temp = 0;
             }
         }
@@ -215,12 +220,13 @@ public class ReBirthArray {
 
 
         private Set<Integer> hashSet;
+
         public RandomizedSet() {
             hashSet = new HashSet<>();
         }
 
         public boolean insert(int val) {
-            if(hashSet.contains(val)) {
+            if (hashSet.contains(val)) {
                 return false;
             }
             hashSet.add(val);
@@ -228,10 +234,10 @@ public class ReBirthArray {
         }
 
         public boolean remove(int val) {
-            if(hashSet.contains(val)) {
+            if (hashSet.contains(val)) {
                 hashSet.remove(val);
                 return true;
-            }else{
+            } else {
                 return false;
             }
         }
@@ -242,8 +248,8 @@ public class ReBirthArray {
             int index = random.nextInt(len);
             int in = 0;
             int ans = 0;
-            for(Integer num : hashSet) {
-                if(in == index) {
+            for (Integer num : hashSet) {
+                if (in == index) {
                     num = ans;
                     break;
                 }
@@ -252,4 +258,62 @@ public class ReBirthArray {
             return ans;
         }
     }
+
+    /**
+     * 除自身以外数组的乘积
+     *
+     * @param nums
+     * @return
+     */
+    public int[] productExceptSelf(int[] nums) {
+        int len = nums.length;
+        int[] left = new int[len];
+
+        left[0] = nums[0];
+        for (int i = 1; i < len; i++) {
+            left[i] = left[i - 1] * nums[i];
+        }
+
+        int right = 1;
+        for (int i = len - 1; i > 0; i--) {
+            left[i] = left[i - 1] * right;
+            right *= nums[i];
+        }
+
+        left[0] = right;
+        return left;
+    }
+
+
+    /**
+     * 加油站
+     *
+     * @param gas
+     * @param cost
+     * @return
+     */
+    public int canCompleteCircuit(int[] gas, int[] cost) {
+
+        int len = gas.length;
+
+        int minSum = Integer.MAX_VALUE;
+        int minIndex = 0;
+        int gasSum = 0;
+        for (int i = 0; i < len; i++) {
+            gasSum += gas[i] - cost[i];
+
+            if(gasSum < minSum) {
+                minSum = gasSum;
+                minIndex = i;
+            }
+        }
+
+        if(minSum > 0) {
+            return 0;
+        }
+
+        return gasSum < 0 ? -1 : (minIndex+1)%len;
+
+    }
+
 }
