@@ -302,18 +302,48 @@ public class ReBirthArray {
         for (int i = 0; i < len; i++) {
             gasSum += gas[i] - cost[i];
 
-            if(gasSum < minSum) {
+            if (gasSum < minSum) {
                 minSum = gasSum;
                 minIndex = i;
             }
         }
 
-        if(minSum > 0) {
+        if (minSum > 0) {
             return 0;
         }
 
-        return gasSum < 0 ? -1 : (minIndex+1)%len;
+        return gasSum < 0 ? -1 : (minIndex + 1) % len;
 
+    }
+
+    /**
+     * 135. 分发糖果
+     *
+     * @param ratings
+     * @return
+     */
+    public int candy(int[] ratings) {
+        int len = ratings.length;
+        int ans = 1;
+        int inc = 1;
+        int des = 1;
+        int pre = 1;
+        for (int i = 1; i < len; i++) {
+            if(ratings[i] >= ratings[i-1]) {
+                pre = ratings[i] == ratings[i-1] ? 1 : pre+1;
+                ans += pre;
+                inc = pre;
+                des = 0;
+            }else{
+                des++;
+                if(des == inc) {
+                    des++;
+                }
+                ans += des;
+                pre = 1;
+            }
+        }
+        return ans;
     }
 
 }
