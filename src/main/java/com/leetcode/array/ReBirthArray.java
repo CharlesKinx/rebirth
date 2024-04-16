@@ -346,4 +346,35 @@ public class ReBirthArray {
         return ans;
     }
 
+    /**
+     * 接雨水
+     * @param height
+     * @return
+     */
+    public int trap(int[] height) {
+        Stack<Integer> stack = new Stack<>();
+        int len = height.length;
+        int ans = 0;
+
+        for(int i = 0;i<len;i++) {
+
+            while(!stack.empty() && height[i] > height[stack.peek()]) {
+                int top = stack.pop();
+                if(stack.empty()){
+                    break;
+                }
+
+                int left = stack.peek();
+                int k = i - left - 1;
+                int h = Math.min(height[left],height[i]) - height[top];
+
+                ans += k * h;
+            }
+
+            stack.push(i);
+        }
+
+        return ans;
+    }
+
 }
