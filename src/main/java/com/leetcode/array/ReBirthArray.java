@@ -377,4 +377,36 @@ public class ReBirthArray {
         return ans;
     }
 
+    /**
+     * 罗马数字转整数
+     * @param s
+     * @return
+     */
+    public int romanToInt(String s) {
+
+        Map<Character,Integer> hashmap = new HashMap<>();
+        hashmap.put('I',1);
+        hashmap.put('V',5);
+        hashmap.put('X',10);
+        hashmap.put('L',50);
+        hashmap.put('C',100);
+        hashmap.put('D',500);
+        hashmap.put('M',1000);
+
+        int ans = 0;
+        int len = s.length();
+        int maxV = 0;
+
+        for(int i = len-1; i>=0;i--) {
+            if(maxV <= hashmap.get(s.charAt(i))) {
+                ans += hashmap.get(s.charAt(i));
+                maxV = hashmap.get(s.charAt(i));
+            }else{
+                ans -= hashmap.get(s.charAt(i));
+            }
+        }
+
+        return ans;
+    }
+
 }
