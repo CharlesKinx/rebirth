@@ -434,4 +434,159 @@ public class ReBirthArray {
         }
         return  stringBuffer.toString();
     }
+
+    /**
+     * 最长公共前缀
+     * @param strs
+     * @return
+     */
+    public String longestCommonPrefix(String[] strs) {
+        StringBuilder stringBuilder = new StringBuilder("");
+
+        int len = strs.length;
+        if(len == 0) {
+            return "";
+        }
+        int index = 0;
+        for(int i = 0;i<strs[0].length();i++) {
+            char c = strs[0].charAt(i);
+            boolean isValid = true;
+            for(int j = 1; j<len;j++) {
+                if(strs[j].length() > i && strs[j].charAt(i) == c) {
+                    continue;
+                }else{
+                    isValid = false;
+                    break;
+                }
+            }
+            if(isValid) {
+                stringBuilder.append(c);
+            }else{
+                break;
+            }
+        }
+        return stringBuilder.toString();
+    }
+
+    /**
+     * Z 字形变换
+     * @param s
+     * @param numRows
+     * @return
+     */
+    public String convert(String s, int numRows) {
+
+        if(numRows < 2) {
+            return s;
+        }
+        List<StringBuilder> stringBuilders = new ArrayList<>();
+        for(int i = 0;i<numRows;i++) {
+            stringBuilders.add(new StringBuilder());
+        }
+
+        int index = 0;
+        int flag = -1;
+        for(char c : s.toCharArray()) {
+            stringBuilders.get(index).append(c);
+            if(index == 0 || index == numRows - 1) {
+                flag = -flag;
+            }
+            index += flag;
+        }
+
+        StringBuilder ans = new StringBuilder();
+        for(int i = 0;i<numRows;i++) {
+            ans.append(stringBuilders.get(i));
+        }
+        return ans.toString();
+    }
+
+
+    /**
+     *  找出字符串中第一个匹配项的下标
+     * @param haystack
+     * @param needle
+     * @return
+     */
+
+    public int strStr(String haystack, String needle) {
+        int len1 = haystack.length();
+        int len2 = needle.length();
+        if(len2 > len1) {
+            return -1;
+        }
+
+        int ans = -1;
+        int index1 = 0;
+        int index2 = 0;
+
+        for(int i =0; i< index1;i++) {
+            int t = i;
+            for(int j = 0;j < index2;j++) {
+                if(haystack.charAt(t) == needle.charAt(j)) {
+                    t++;
+                }
+            }
+            if(t - i == index2) {
+                ans = i;
+                break;
+            }
+        }
+        return ans;
+    }
+
+
+    /**
+     * 文本左右对齐
+     * @param words
+     * @param maxWidth
+     * @return
+     */
+    public List<String> fullJustify(String[] words, int maxWidth) {
+
+        List<String> ans = new ArrayList<>();
+        int index = 0;
+        int len = 0;
+        List<StringBuilder> stringBuilders = new ArrayList<>();
+        for(int i = 0;i< words.length;i++) {
+            if(len + words[i].length() < maxWidth) {
+                len += words[i].length();
+                stringBuilders.add(new StringBuilder(words[i]));
+                continue;
+            }else{
+                int intv = i - index;
+                int t = maxWidth - len;
+                if(intv == 1) {
+                    while(t > 0) {
+                        stringBuilders.get(0).append(" ");
+                        t--;
+                    }
+                }else{
+                    int temp = 0;
+                    while(temp < t) {
+                        stringBuilders.get(temp % (intv-1)).append(" ");
+                        temp++;
+                    }
+                }
+
+                StringBuilder s = new StringBuilder();
+                for(StringBuilder st : stringBuilders) {
+                    s.append(st);
+                }
+                ans.add(s.toString());
+                index = i;
+                len = 0;
+                stringBuilders = new ArrayList<>();
+                i--;
+            }
+        }
+        StringBuilder s = new StringBuilder();
+        for(int i = 0;i<stringBuilders.size() - 1;i++) {
+            s.append(stringBuilders.get(i));
+            s.append(" ");
+        }
+        s.append(stringBuilders.get(stringBuilders.size() - 1));
+        ans.add(s.toString());
+        return ans;
+    }
 }
