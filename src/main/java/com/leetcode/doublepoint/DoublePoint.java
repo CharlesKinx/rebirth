@@ -39,6 +39,68 @@ public class DoublePoint {
         return stringBuilder.toString();
 
     }
+
+
+    /**
+     * 判断子序列
+     * @param s
+     * @param t
+     * @return
+     */
+    public boolean isSubsequence(String s, String t) {
+        int len1 = s.length();
+        int len2 = t.length();
+
+        if(len1 > len2) {
+            return false;
+        }
+
+        int ind1 = 0;
+        int ind2 = 0;
+
+        while(ind1 < len1 && ind2 < len2) {
+            if(s.charAt(ind1) == t.charAt(ind2)) {
+                ind1++;
+            }
+            ind2++;
+
+        }
+        if(ind1 == len1) {
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+
+    /**
+     * 两数之和 II - 输入有序数组
+     * @param numbers
+     * @param target
+     * @return
+     */
+    public int[] twoSum(int[] numbers, int target) {
+
+        int left = 0;
+        int right = numbers.length - 1;
+        int[] ans = new int[2];
+
+        while(left != right) {
+            if(numbers[left] + numbers[right] == target) {
+                ans[0] = left;
+                ans[1] = right;
+                break;
+            }else if(numbers[left] + numbers[right] > target) {
+                right--;
+            }else{
+                left++;
+            }
+        }
+
+        return ans;
+
+    }
+
     public static void main(String[] args) {
         int a = 'a';
         int b = 'A';
