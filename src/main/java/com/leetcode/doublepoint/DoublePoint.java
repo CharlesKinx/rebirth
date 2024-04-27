@@ -1,5 +1,9 @@
 package com.leetcode.doublepoint;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * @author HDU-AIOT-WuHD
  * @date 2024-04-25 10:03
@@ -101,6 +105,60 @@ public class DoublePoint {
 
     }
 
+    /**
+     * 盛最多水的容器
+     * @param height
+     * @return
+     */
+    public int maxArea(int[] height) {
+       int ans = Integer.MIN_VALUE;
+
+       int left = 0;
+       int right = height.length - 1;
+       while(left < right) {
+           if(height[left] <= height[right]) {
+               ans = Math.max(ans,height[left] * (right-left));
+               left++;
+           }else{
+               ans = Math.max(ans,height[right] * (right-left));
+               right--;
+           }
+       }
+       return ans;
+    }
+
+    /**
+     * 15. 三数之和
+     * @param nums
+     * @return
+     */
+    public List<List<Integer>> threeSum(int[] nums) {
+        Arrays.sort(nums);
+        int len = nums.length;
+        List<List<Integer>> ans = new ArrayList<>();
+        for(int i = 0;i< len;i++) {
+            int left = i+1;
+            int right = len-1;
+            int target = -nums[i];
+            if(target < 0) {
+                break;
+            }
+            if(i == 0 || nums[i] != nums[i-1]) {
+                while(left <right) {
+                    if(nums[left] + nums[right] == target) {
+                        ans.add(Arrays.asList(nums[i],nums[left],nums[right]));
+                        while(left < right && nums[left] == nums[++left]);
+                        while(left < right && nums[right] == nums[--right]);
+                    }else if(nums[left] + nums[right] > target) {
+                        right--;
+                    }else{
+                        left++;
+                    }
+                }
+            }
+        }
+        return ans;
+    }
     public static void main(String[] args) {
         int a = 'a';
         int b = 'A';
