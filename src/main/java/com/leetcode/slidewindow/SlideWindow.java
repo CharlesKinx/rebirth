@@ -31,4 +31,30 @@ public class SlideWindow {
         }
         return ans == Integer.MAX_VALUE ? 0 : ans;
     }
+
+
+    /**
+     * 无重复字符的最长子串
+     * @param s
+     * @return
+     */
+    public int lengthOfLongestSubstring(String s) {
+        int[] arr = new int[130];
+        int len = s.length();
+        int left = 0;
+        int right = 0;
+        int ans = Integer.MIN_VALUE;
+        while(right < len) {
+
+            while(left < right && arr[s.charAt(right)] != 0) {
+                arr[s.charAt(left)] = 0;
+                left++;
+            }
+            arr[s.charAt(right)] = 1;
+            ans = Math.max(ans,right-left+1);
+            right++;
+        }
+
+        return ans==Integer.MIN_VALUE ? 0 : ans;
+    }
 }
