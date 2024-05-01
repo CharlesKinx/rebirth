@@ -1,5 +1,7 @@
 package com.leetcode.slidewindow;
 
+import java.util.*;
+
 /**
  * @author HDU-AIOT-WuHD
  * @date 2024-04-28 9:43
@@ -57,4 +59,75 @@ public class SlideWindow {
 
         return ans==Integer.MIN_VALUE ? 0 : ans;
     }
+
+    /**
+     * 串联所有单词的子串
+     * @param s
+     * @param words
+     * @return
+     */
+    public static List<List<String>> list;
+    public List<Integer> findSubstring(String s, String[] words) {
+        int len = s.length();
+        Map<String,Integer> hashMap = new HashMap<>();
+        for(String s1 : words) {
+            hashMap.put(s1,hashMap.getOrDefault(s1,0)+1);
+        }
+        int len1 = words.length;
+        int len2 = words[0].length();
+
+        List<Integer> ans = new ArrayList<>();
+        for(int i = 0;i < len2;i++) {
+            Map<String,Integer> temp = new HashMap<>();
+            for(int j = i;j + len2 <= len; j+=len2) {
+                String sub = s.substring(j,j+len2);
+                temp.put(sub,temp.getOrDefault(sub,0)+1);
+
+                if(j >= i + (len1*len2)) {
+                    int indx = j - len1*len2;
+                    String prev = s.substring(indx,indx+len2);
+
+                    if(temp.get(prev) == 1) {
+                        temp.remove(prev);
+                    }else{
+                        temp.put(prev,temp.get(prev)-1);
+                    }
+
+                    if(!hashMap.equals(temp)) {
+                        continue;
+                    }
+                }
+                if(!temp.getOrDefault(sub,0).equals(hashMap.getOrDefault(sub,0))) {
+                        continue;
+                }
+                if(temp.equals(hashMap)) {
+                    ans.add(j - (len1-1)*len2);
+                }
+            }
+        }
+
+        return ans;
+    }
+
+    public static void backTrace(String[] words, List<String> strings,int[] visited) {
+        if(strings.size() == words.length) {
+            list.add(new ArrayList<>(strings));
+            return;
+        }
+
+        for(int i = 0;i< words.length;i++) {
+            if(visited[i] != 0 ||  (i >0 && words[i].equals(words[i-1]) && visited[i-1] == 0)) {
+                continue;
+            }
+            strings.add(words[i]);
+            visited[i] = 1;
+            backTrace(words,strings,visited);
+            visited[i] = 0;
+            strings.remove(strings.size()-1);
+        }
+
+    }
+
+
+
 }
