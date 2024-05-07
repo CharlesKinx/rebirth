@@ -131,7 +131,6 @@ public class SlideWindow {
             visited[i] = 0;
             strings.remove(strings.size() - 1);
         }
-
     }
 
     /**
