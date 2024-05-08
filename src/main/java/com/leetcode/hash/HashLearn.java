@@ -70,5 +70,94 @@ public class HashLearn {
      */
     public boolean wordPattern(String pattern, String s) {
 
+        String[] strings = s.split(" ");
+        if(pattern.length() != strings.length) {
+            return false;
+        }
+        HashMap<Character,String> hashMap1 = new HashMap<>();
+        HashMap<String,Character> hashMap2 = new HashMap<>();
+
+        for(int i = 0;i<strings.length;i++) {
+            if(!hashMap1.containsKey(pattern.charAt(i))) {
+                hashMap1.put(pattern.charAt(i),strings[i]);
+            }else{
+                if(!hashMap1.get(pattern.charAt(i)).equals(strings[i])) {
+                    return false;
+                }
+            }
+
+            if(!hashMap2.containsKey(strings[i])) {
+                hashMap2.put(strings[i],pattern.charAt(i));
+            }else{
+                if(hashMap2.get(strings[i]) != pattern.charAt(i)) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+
+    /**
+     * 有效的字母异位词
+     * @param s
+     * @param t
+     * @return
+     */
+    public boolean isAnagram(String s, String t) {
+        int[] arr = new int[26];
+        if(s.length() != t.length()) {
+            return false;
+        }
+
+        for(int i = 0;i<s.length();i++) {
+            arr[s.charAt(i)-'a']++;
+        }
+
+        for(int i = 0;i<s.length();i++) {
+            arr[t.charAt(i)-'a']++;
+
+            if(arr[t.charAt(i)-'a'] < 0) {
+                return false;
+            }
+        }
+        return true;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
