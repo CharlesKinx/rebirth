@@ -1,7 +1,6 @@
 package com.leetcode.hash;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author HDU-AIOT-WuHD
@@ -123,6 +122,28 @@ public class HashLearn {
             }
         }
         return true;
+    }
+
+
+    /**
+     * 字母异位词分组
+     * @param strs
+     * @return
+     */
+    public List<List<String>> groupAnagrams(String[] strs) {
+        HashMap<String,List<String>> hashMap = new HashMap<>();
+        List<List<String>> ans = new ArrayList<>();
+        for(int i = 0;i<strs.length;i++) {
+            char[] t = strs[i].toCharArray();
+            Arrays.sort(t);
+            String temp = new String(t);
+
+            List<String> list = hashMap.getOrDefault(temp,new ArrayList<>());
+            list.add(strs[i]);
+            hashMap.put(temp,list);
+        }
+
+        return new ArrayList<>(hashMap.values());
     }
 }
 
