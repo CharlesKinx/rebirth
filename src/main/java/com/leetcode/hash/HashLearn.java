@@ -145,6 +145,107 @@ public class HashLearn {
 
         return new ArrayList<>(hashMap.values());
     }
+
+
+    /**
+     * 两数之和
+     * @param nums
+     * @param target
+     * @return
+     */
+    public int[] twoSum(int[] nums, int target) {
+
+        HashMap<Integer,Integer> hashMap = new HashMap<>();
+        int[] ans = new int[2];
+        for(int i = 0;i< nums.length;i++) {
+            if(hashMap.containsKey(target-nums[i])) {
+                ans[0] = hashMap.get(target-nums[i]);
+                ans[1] = i;
+                return ans;
+            }else{
+                hashMap.put(nums[i],i);
+            }
+        }
+        return ans;
+    }
+
+    /**
+     * 存在重复元素 II
+     * @param nums
+     * @param k
+     * @return
+     */
+    public boolean containsNearbyDuplicate(int[] nums, int k) {
+        HashMap<Integer,Integer> hashMap = new HashMap<>();
+
+        for(int i = 0;i< nums.length;i++) {
+
+            if(hashMap.containsKey(nums[i]) && Math.abs(hashMap.get(nums[i]) - i) <= k ) {
+                return true;
+            }
+            hashMap.put(nums[i],i);
+
+        }
+        return false;
+    }
+
+
+    /**
+     * 快乐数
+     * @param n
+     * @return
+     */
+
+    public int getSum(int n) {
+        int sum = 0;
+
+        while(n > 0) {
+            int t = n % 10;
+            n = n/10;
+            sum += t*t;
+        }
+        return sum;
+    }
+    public boolean isHappy(int n) {
+
+        HashSet<Integer> hashSet = new HashSet<>();
+
+        while(n != 1 && !hashSet.contains(n)) {
+            hashSet.add(n);
+            n = getSum(n);
+        }
+        return n==1;
+    }
+
+    /**
+     * 最长连续序列
+     * @param nums
+     * @return
+     */
+    public int longestConsecutive(int[] nums) {
+        HashSet<Integer> hashSet = new HashSet<>();
+        int ans = 0;
+        for(int i = 0;i< nums.length;i++) {
+            hashSet.add(nums[i]);
+        }
+
+        for(int i = 0;i<nums.length;i++) {
+            int num = nums[i];
+
+            if(!hashSet.contains(num-1)) {
+                int t = 0;
+
+                while(hashSet.contains(num)) {
+                    t++;
+                    num += 1;
+                }
+
+                ans = Math.max(ans,t);
+            }
+        }
+
+        return ans;
+    }
 }
 
 
